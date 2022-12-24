@@ -49,7 +49,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/colorOnPrimary"
                 android:textSize="20sp"
-                tools:text="Default" />
+                android:text="@string/def_city" />
 
         </LinearLayout>
 
@@ -92,7 +92,7 @@
             android:fontFamily="@font/montserrat_medium"
             android:textColor="@color/black"
             android:textSize="18sp"
-            tools:text="24%" />
+            android:text="24%" />
 
         <TextView
             android:id="@+id/tvHumidity"
@@ -131,7 +131,7 @@
             android:fontFamily="@font/montserrat_medium"
             android:textColor="@color/black"
             android:textSize="18sp"
-            tools:text="76%" />
+            android:text="76%" />
 
         <TextView
             android:id="@+id/tvChanceOfRain"
@@ -169,7 +169,7 @@
             android:fontFamily="@font/montserrat_medium"
             android:textColor="@color/black"
             android:textSize="18sp"
-            tools:text="9 km/h" />
+            android:text="9 km/h" />
 
         <TextView
             android:id="@+id/tvWind"
@@ -194,7 +194,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_bias="0.6"
-        tools:text="24°" />
+        android:text="24°" />
 
     <TextView
         android:id="@+id/tvWeatherState"
@@ -206,7 +206,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvWeatherTemp"
-        tools:text="Rainy / Sunny" />
+        android:text="Дождь / Ясно" />
 
     <TextView
         android:id="@+id/tvCurrentDate"
@@ -218,7 +218,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvWeatherState"
-        tools:text="Wednesday, 26 April" />
+        android:text="Wednesday, 26 April" />
 
     <ImageView
         android:id="@+id/ivWeather"
@@ -228,7 +228,8 @@
         app:layout_constraintBottom_toTopOf="@id/tvWeatherTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:contentDescription="@string/weather_image" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

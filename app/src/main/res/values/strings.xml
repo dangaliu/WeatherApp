@@ -5,7 +5,9 @@
     <string name="back">back</string>
     <string name="location">location</string>
     <string name="nothing">Nothing</string>
-    <string name="humidity">Humidity</string>
-    <string name="chance_of_rain">Chance of rain</string>
-    <string name="wind">Wind</string>
+    <string name="humidity">Влажность</string>
+    <string name="chance_of_rain">Вероятность осадков</string>
+    <string name="wind">Ветер</string>
+    <string name="weather_image">weather image</string>
+    <string name="def_city">Казань</string>
 </resources>

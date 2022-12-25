@@ -1,4 +1,4 @@
-package com.example.weatherapp.model.entity
+package com.example.weatherapp.model.entity.weatherResponse
 
 data class Weather(
     val description: String,

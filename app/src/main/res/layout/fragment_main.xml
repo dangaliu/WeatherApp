@@ -47,9 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
+                android:text="@string/def_city"
                 android:textColor="@color/colorOnPrimary"
-                android:textSize="20sp"
-                android:text="@string/def_city" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -58,7 +58,7 @@
     <View
         android:id="@+id/moreInfoContainer"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:background="@drawable/more_info_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,9 +90,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
+            android:text="24%"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:text="24%" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvHumidity"
@@ -129,9 +129,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
+            android:text="NaN"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:text="76%" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvChanceOfRain"
@@ -167,9 +167,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
+            android:text="9 km/h"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:text="9 km/h" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvWind"
@@ -186,27 +186,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_medium"
+        android:text="24°"
         android:textColor="@color/colorOnPrimary"
         android:textSize="120sp"
         app:layout_constraintBottom_toTopOf="@id/moreInfoContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.6"
-        android:text="24°" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/tvWeatherState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_regular"
+        android:text="Дождь / Ясно"
         android:textColor="@color/colorOnPrimary"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWeatherTemp"
-        android:text="Дождь / Ясно" />
+        app:layout_constraintTop_toBottomOf="@id/tvWeatherTemp" />
 
     <TextView
         android:id="@+id/tvCurrentDate"
@@ -214,22 +213,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_regular"
+        android:text="Wednesday, 26 April"
         android:textColor="@color/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWeatherState"
-        android:text="Wednesday, 26 April" />
+        app:layout_constraintTop_toBottomOf="@id/tvWeatherState" />
 
-    <ImageView
-        android:id="@+id/ivWeather"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@drawable/weather_main_img"
-        app:layout_constraintBottom_toTopOf="@id/tvWeatherTemp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toTopOf="@id/moreInfoContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:contentDescription="@string/weather_image" />
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentDate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.adapters.WeatherInHourAdapter
 import com.example.weatherapp.databinding.FragmentMainBinding
 import com.example.weatherapp.viewmodel.MainViewModel
 
@@ -14,6 +16,7 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var weatherInHoursAdapter: WeatherInHourAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +35,15 @@ class MainFragment : Fragment() {
 
     private fun init() {
         viewModel.getWeather()
+        viewModel.getWeatherInHours()
+
+        weatherInHoursAdapter = WeatherInHourAdapter(requireContext())
+
+        binding.rvHours.apply {
+            adapter = weatherInHoursAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -44,7 +56,10 @@ class MainFragment : Fragment() {
                 tvWeatherState.text = weather.weather
                 tvCurrentDate.text = weather.dateStr
             }
+        }
 
+        viewModel.weatherInHour.observe(viewLifecycleOwner) {
+            weatherInHoursAdapter.updateItems(ArrayList(it))
         }
     }
 

@@ -17,10 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weatherapp.adapters.WeatherInHourAdapter
 import com.example.weatherapp.databinding.FragmentMainBinding
-import com.example.weatherapp.utils.checkPermission
-import com.example.weatherapp.utils.coarseLocation
-import com.example.weatherapp.utils.fineLocation
-import com.example.weatherapp.utils.showToast
+import com.example.weatherapp.utils.*
 import com.example.weatherapp.viewmodel.MainViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -30,7 +27,6 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var weatherInHoursAdapter: WeatherInHourAdapter
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var locationManager: LocationManager
 
@@ -48,9 +44,11 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!checkGPSenabled()) {
+            showDialog(title = "Внимание!", message = "Для корректной работы приложения включите GPS")
+        }
     }
 
     override fun onCreateView(
@@ -114,6 +112,10 @@ class MainFragment : Fragment() {
         viewModel.city.observe(viewLifecycleOwner) {
             binding.tvLocation.text = it
         }
+    }
+
+    private fun checkGPSenabled(): Boolean {
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
 }

@@ -5,5 +5,6 @@ data class WeatherForView(
     val temp: Int,
     val humidity: Int,
     val weather: String,
-    val windSpeed: Int
+    val windSpeed: Int,
+    val icon: String
 )

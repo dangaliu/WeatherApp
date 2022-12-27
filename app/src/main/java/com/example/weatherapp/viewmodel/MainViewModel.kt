@@ -63,10 +63,11 @@ class MainViewModel : ViewModel() {
                         it.uppercaseChar()
                     }
                 val windSpeed = currentDay.wind.speed.toInt()
+                val icon = currentDay.weather[0].icon
 
                 withContext(Dispatchers.Main) {
                     weatherForViewMutable.value =
-                        WeatherForView(dateStr, temp, humidity, weather, windSpeed)
+                        WeatherForView(dateStr, temp, humidity, weather, windSpeed, icon = icon)
                 }
             } else {
                 Log.d(TAG, "getWeather: ${response.message()}")

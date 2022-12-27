@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.weatherapp.adapters.WeatherInHourAdapter
 import com.example.weatherapp.databinding.FragmentMainBinding
 import com.example.weatherapp.utils.checkPermission
@@ -100,6 +101,9 @@ class MainFragment : Fragment() {
                 tvWindSpeed.text = "${weather.windSpeed} km/h"
                 tvWeatherState.text = weather.weather
                 tvCurrentDate.text = weather.dateStr
+                Glide.with(requireContext())
+                    .load("http://openweathermap.org/img/wn/${weather.icon}.png")
+                    .into(binding.ivWeatherImg)
             }
         }
 

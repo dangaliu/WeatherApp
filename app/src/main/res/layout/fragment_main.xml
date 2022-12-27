@@ -233,5 +233,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCurrentDate" />
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivWeatherImg"
+        app:layout_constraintBottom_toTopOf="@id/tvWeatherTemp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:contentDescription="@string/weather_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

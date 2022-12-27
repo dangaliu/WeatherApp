@@ -1,5 +1,7 @@
 package com.example.weatherapp.viewmodel
 
+import android.location.Location
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +10,7 @@ import com.example.weatherapp.model.api.WeatherApi
 import com.example.weatherapp.model.entity.WeatherForView
 import com.example.weatherapp.model.entity.WeatherInHour
 import com.example.weatherapp.model.entity.weatherResponse.WeatherResponse
+import com.google.android.gms.location.LocationListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,15 +20,37 @@ import kotlin.math.abs
 
 class MainViewModel : ViewModel() {
 
+    private val TAG = "MainViewModel"
+
     private var weatherForViewMutable = MutableLiveData<WeatherForView>()
     val weatherForView: LiveData<WeatherForView> = weatherForViewMutable
 
     private var weatherInHoursMutable = MutableLiveData<List<WeatherInHour>>()
     val weatherInHour: LiveData<List<WeatherInHour>> = weatherInHoursMutable
 
-    fun getWeather() {
+    private var cityMutable = MutableLiveData<String>()
+    val city: LiveData<String> = cityMutable
+
+    fun getCityFromLocation(location: Location) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = WeatherApi.weatherApiClient.get5DayWeather()
+            val response = WeatherApi.weatherApiClient.getCityFromCoordinates(
+                lat = location.latitude,
+                lon = location.longitude
+            )
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful && response.body() != null) {
+                    val cityResponse = response.body()!!
+                    cityMutable.value = cityResponse[0].local_names.ru
+                }
+            }
+        }
+    }
+
+
+    fun getWeather(lat: Double, lon: Double) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = WeatherApi.weatherApiClient.get5DayWeather(lat = lat, lon = lon)
             if (response.isSuccessful && response.body() != null) {
                 val weatherResponse = response.body()!!
                 val currentWeatherIndex = getCurrentDataPosition(getDateMillisList(weatherResponse))
@@ -43,13 +68,15 @@ class MainViewModel : ViewModel() {
                     weatherForViewMutable.value =
                         WeatherForView(dateStr, temp, humidity, weather, windSpeed)
                 }
+            } else {
+                Log.d(TAG, "getWeather: ${response.message()}")
             }
         }
     }
 
-    fun getWeatherInHours() {
+    fun getWeatherInHours(lat: Double, lon: Double) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = WeatherApi.weatherApiClient.get5DayWeather()
+            val response = WeatherApi.weatherApiClient.get5DayWeather(lat = lat, lon = lon)
             if (response.isSuccessful && response.body() != null) {
                 val items = arrayListOf<WeatherInHour>()
                 val weatherResponse = response.body()!!

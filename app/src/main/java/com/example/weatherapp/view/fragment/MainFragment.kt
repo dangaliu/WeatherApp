@@ -1,14 +1,16 @@
 package com.example.weatherapp.view.fragment
 
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
+import android.content.Context
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +31,8 @@ class MainFragment : Fragment() {
     private lateinit var weatherInHoursAdapter: WeatherInHourAdapter
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private lateinit var locationManager: LocationManager
+
     private var requestLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
 
@@ -44,6 +48,8 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     override fun onCreateView(
@@ -61,13 +67,21 @@ class MainFragment : Fragment() {
         setObservers()
         if (!checkPermission(coarseLocation)) {
             requestLauncher.launch(arrayOf(coarseLocation, fineLocation))
+        } else {
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                0L,
+                0f
+            ) { location ->
+                Log.d("location", "${location.latitude} ${location.longitude}")
+                viewModel.getWeather(lat = location.latitude, lon = location.longitude)
+                viewModel.getWeatherInHours(lat = location.latitude, lon = location.longitude)
+                viewModel.getCityFromLocation(location)
+            }
         }
     }
 
     private fun init() {
-        viewModel.getWeather()
-        viewModel.getWeatherInHours()
-
         weatherInHoursAdapter = WeatherInHourAdapter(requireContext())
 
         binding.rvHours.apply {
@@ -91,6 +105,10 @@ class MainFragment : Fragment() {
 
         viewModel.weatherInHour.observe(viewLifecycleOwner) {
             weatherInHoursAdapter.updateItems(ArrayList(it))
+        }
+
+        viewModel.city.observe(viewLifecycleOwner) {
+            binding.tvLocation.text = it
         }
     }
 
